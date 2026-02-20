@@ -1,1 +1,1 @@
-Программа LogScan 1.0 !!!
+Log Scaner Utility 1.0

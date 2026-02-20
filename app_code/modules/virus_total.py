@@ -1,53 +1,40 @@
 import requests
-import time
-import sys
-
-
-
-API_KEY = "59663e053a0133586cfbe60c422e81b132fcf5286fe7ac1235a2360f2f074aa8"
-url_submit = "https://www.virustotal.com/api/v3/urls"
-url_to_check = sys.argv[1]
-
-headers = {
-    "x-apikey": API_KEY
-}
-
-data = {"url": url_to_check}
-response = requests.post(url_submit, data=data, headers=headers)
-response_json = response.json()
-
-analysis_id = response_json["data"]["id"]
-
-url_analysis = f"https://www.virustotal.com/api/v3/analyses/{analysis_id}"
-
-while True:
-    response = requests.get(url_analysis, headers=headers)
-    result = response.json()
-
-    status = result["data"]["attributes"]["status"]
-    if status == "completed":
-        break
-
-    print("Анализ в процессе... Ожидание")
-    time.sleep(2)
-
-stats = result["data"]["attributes"]["stats"]
-results = result["data"]["attributes"]["results"]
-
-
-
-
-
-
 
 
 class VirusTotalChecker:
     API_URL = 'https://www.virustotal.com/api/v3/'
+    IP_ANALYS_ENDPOINT = 'ip_addresses/'
+    FILE_DIGEST_ANALYS_ENDPOINT = 'files/'
 
     def __init__(self, api_key, data_to_check):
         self.headers = { 'x-apikey': api_key }
         self.data_to_check = data_to_check
-        self._checks_result = None
+        self._checks_result = []
+
+        for log_data in self.data_to_check:     # может это другой класс ??
+            ip_analys_result = self.get_response(VirusTotalChecker.IP_ANALYS_ENDPOINT, log_data[0])
+
+            full_result = {        # может список ???
+                "Client action time": log_data[2].strip('[]'), "Client IP address": log_data[0],
+
+                "IP status malicious count": ip_analys_result["data"]["attributes"]["last_analysis_stats"]["malicious"],
+                "IP status suspicious count": ip_analys_result["data"]["attributes"]["last_analysis_stats"]["suspicious"],
+                "IP status undetected count": ip_analys_result["data"]["attributes"]["last_analysis_stats"]["undetected"],
+                "IP status harmless count": ip_analys_result["data"]["attributes"]["last_analysis_stats"]["harmless"],
+                "Client uploaded file digest": log_data[1]
+            }
+
+            hash_analys_result = self.get_response(VirusTotalChecker.FILE_DIGEST_ANALYS_ENDPOINT, log_data[1])
+
+            if hash_analys_result is not None:
+                full_result["Hash status malicious count"] = hash_analys_result["data"]["attributes"]["last_analysis_stats"]["malicious"]
+                full_result["Hash status suspicious count"] = hash_analys_result["data"]["attributes"]["last_analysis_stats"]["suspicious"]
+                full_result["Hash status undetected count"] = hash_analys_result["data"]["attributes"]["last_analysis_stats"]["undetected"]
+                full_result["Hash status harmless count"] = hash_analys_result["data"]["attributes"]["last_analysis_stats"]["harmless"]
+            else:
+                full_result["Hash status"] = 'Not exist in VirusTotal base'
+
+            self.checks_result.append(full_result)
 
     @property
     def checks_result(self):
@@ -57,19 +44,13 @@ class VirusTotalChecker:
     def checks_result(self, value):
         self._checks_result = value
 
-    #def
+    def get_response(self, endpoint_type, log_data_type):
+        response = requests.get(f'{VirusTotalChecker.API_URL}{endpoint_type}{log_data_type}', headers=self.headers)
 
-
-
-
-
-
-
-
-
-
-
-
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return None
 
 
 

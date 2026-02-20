@@ -2,8 +2,7 @@ import re
 
 
 class LogParser:
-    TARGET_DATA_KEYS = ('ip', 'file_digest', 'upload_time')
-
+    # Паттерны: ip адрес, sha256 хэш, дата и время.
     TARGET_DATA_PATTERNS = (re.compile(r'\d+\.\d+\.\d+\.\d+'), re.compile(r'[0-9A-Fa-f]{64}', re.IGNORECASE),
                             re.compile(r'\[\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}\..*]'))
 
@@ -24,12 +23,14 @@ class LogParser:
             logs = file.readlines()
 
             for line in logs:
-                target_data = dict.fromkeys(LogParser.TARGET_DATA_KEYS)
+                target_data = []
 
-                for i in range(len(LogParser.TARGET_DATA_KEYS)):
+                for i in range(len(LogParser.TARGET_DATA_PATTERNS)):
                     match = re.search(LogParser.TARGET_DATA_PATTERNS[i], line)
 
                     if match:
-                        target_data[LogParser.TARGET_DATA_KEYS[i]] = match.group()
+                        target_data.append(match.group())
+                    else:
+                        target_data.append(None)
 
                 self.matched_data.append(target_data)
