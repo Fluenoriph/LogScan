@@ -1,40 +1,9 @@
-import argparse
-import re
-import sys
-import json
-import requests
-from modules.log_parser import LogParser
-from modules.virus_total import VirusTotalChecker
+from app_code.modules.argument_parser import ArgumentParser
+from app_code.modules.program_process import ProgramProcess
 
 
-loger = LogParser('.\\logs\\sample_2.log')
-loger.parse()
+if __name__ == '__main__':
+    argument_parser = ArgumentParser()
 
-key = input('Input api key:')
-
-checker = VirusTotalChecker(key, loger.matched_data)
-
-for item in checker.checks_result:
-    print('------------------------------------------------')
-
-    for key, value in item.items():
-        print(f" {key}: {value}")
-
-
-
-
-
-
-
-
-
-'''
-# Создаём парсер аргументов
-parser = argparse.ArgumentParser(description="Log analyzer CLI utility")
-parser.add_argument('--file', required=True, help='Path to log file')
-parser.add_argument('--verbose', action='store_true', help='Enable detailed output')
-
-args = parser.parse_args()'''
-
-
-
+    app_core = ProgramProcess(argument_parser.arguments.logfile, argument_parser.arguments.apikey,
+                              argument_parser.arguments.output, argument_parser.arguments.format)
