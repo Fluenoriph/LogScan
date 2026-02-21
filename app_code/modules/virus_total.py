@@ -9,15 +9,24 @@ class VirusTotalChecker:
     ANALYSIS_STATUS = ("malicious", "suspicious", "undetected", "harmless")
     ANALYSIS_OBJECT = ('IP address', 'File digest')
 
-    def __init__(self, api_key, data_to_check):
+    def __init__(self, api_key, data_to_check, program_logger):
         self.headers = { 'x-apikey': api_key }
         self.data_to_check = data_to_check
         self._checks_result = []
 
-        [self.checks_result.append(
-            VirusTotalChecker.convert_response(self.get_response(VirusTotalChecker.IP_ANALYS_ENDPOINT, log_data[0]),
-                                               self.get_response(VirusTotalChecker.FILE_DIGEST_ANALYS_ENDPOINT, log_data[1]),
-                                               log_data)) for log_data in self.data_to_check]
+        program_logger.info('Started scanning on VirusTotal')
+
+        try:
+            [self.checks_result.append(
+                VirusTotalChecker.convert_response(self.get_response(VirusTotalChecker.IP_ANALYS_ENDPOINT, log_data[0]),
+                                                   self.get_response(VirusTotalChecker.FILE_DIGEST_ANALYS_ENDPOINT, log_data[1]),
+                                                   log_data)) for log_data in self.data_to_check]
+
+            program_logger.info('Scanning is successful')
+
+        except requests.exceptions.ConnectionError:
+            program_logger.error('Network connection critical error')
+            exit(0)
 
     @property
     def checks_result(self):

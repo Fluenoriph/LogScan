@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Веб интерфейс</title>
+        <style>
+            @media screen and (min-width: 1440px) {
+                main { text-align: center; }
+            }
+
+            * { font-family: Arial, Helvetica, sans-serif; }
+
+            header {
+                border: 1px solid rgb(0, 255, 255);
+                border-radius: 7px;
+                background-color: rgb(6, 5, 57);
+                height: 60px;
+                margin-bottom: 20px;
+                padding-top: 1px;
+            }
+
+            header h3 {
+                text-align: left;
+                color: antiquewhite;
+                padding-left: 20px;
+            }
+
+            main {
+                margin-left: 230px;
+            }
+
+            footer {
+                padding-top: 200px;
+                text-align: center;
+                clear: left;
+            }
+
+            form {
+                padding-top: 50px;
+                text-align: left;
+            }
+
+            label {
+                border: 1px solid rgb(0, 255, 255);
+                border-radius: 7px;
+                background-color: green;
+                color: aqua;
+                padding: 5px;
+            }
+
+            input {
+                padding: 7px;
+                background-color: blue;
+            }
+
+        </style>
+    </head>
+    <body>
+        <header>
+            <h3>Отправка данных на сервер для анализа на ресурсе 'www.virustotal.com'</h3>
+        </header>
+        <main>
+            <form action="/scan" method="post" enctype="multipart/form-data">
+
+            <label for="file">Выберите файл лога с сервера:</label>
+            <input type="file" id="file" name="file">
+            <label for="api-key">Введите API Key:</label>
+            <input type="text" id="api-key" name="api-key">
+            <input type="submit" value="Отправить на анализ">
+        </form>
+        </main>
+        <footer>
+            <p>Copyright &copy; Иван Богданов. 2026. Все права защищены.</p>
+            <p>Contacts: fluenoriph@gmail.com, fluenoriph@yandex.ru</p>
+        </footer>
+    </body>
+</html>
