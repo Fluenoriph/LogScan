@@ -1,3 +1,6 @@
+# Файл 'virus_total_checker.py': класс для проверки всех найденных ip адресов и хэшей файлов на ресурсе VirusTotal.
+# * Возможно в дальнейшем можно разделить на два класса или более, по своим конкретным обязанностям. Может из абстрактного класса.
+
 import requests
 from app_code.modules.real_time import CurrentTime
 
@@ -32,9 +35,7 @@ class VirusTotalChecker:
     def checks_result(self):
         return self._checks_result
 
-    @checks_result.setter
-    def checks_result(self, value):
-        self._checks_result = value
+    # Метод для формирования результата проверки с отдельно взятыми параметрами ответа от VirusTotal.
 
     @staticmethod
     def convert_response(ip_analys_response, hash_analys_response, log_data):

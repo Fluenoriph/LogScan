@@ -1,3 +1,5 @@
+# Файл 'log_parser.py': класс для извлечения IP адреса, sha256 суммы загруженного файла и времени загрузки из файла лога с сервера.
+
 import re
 
 
@@ -13,10 +15,6 @@ class LogParser:
     @property
     def matched_data(self):
         return self._matched_data
-
-    @matched_data.setter
-    def matched_data(self, value):
-        self._matched_data = value
 
     def parse(self):
         with open(self.log_file, 'r') as file:

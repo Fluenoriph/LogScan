@@ -1,3 +1,6 @@
+# Файл 'web_api.py': примитивный веб интерфейс.
+# Клиент - браузер. Получает 'сырые' данные отчета в виде json.
+
 import os
 from flask import Flask, render_template, request, jsonify
 from app_code.modules.program_process import ProgramProcess
@@ -20,11 +23,11 @@ def handle_file_upload():
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         uploaded_file.save(file_path)
 
-        result_log_path = os.path.abspath('.\output')
+        result_log_path = os.path.abspath(r'.\output')
 
-        scan = ProgramProcess(file_path, request.form.get("api-key"), result_log_path, 'json')
+        scaner_app = ProgramProcess(file_path, request.form.get("api-key"), result_log_path, 'json')
 
-        return jsonify(scan.result)
+        return jsonify(scaner_app.result)
 
     return None
 

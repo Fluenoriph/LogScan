@@ -1,3 +1,5 @@
+# Файл 'json_report_generator.py': класс для формирования отчета в формате 'json'.
+
 import json
 from app_code.modules.base_report_generator import BaseReportGenerator
 

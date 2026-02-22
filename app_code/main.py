@@ -1,3 +1,12 @@
+"""
+Название утилиты: Log Scaner
+Версия: 1.0
+Дата: Февраль 2026 г.
+Лицензия: MIT License
+Автор: Богданов Иван Иванович
+Контакты: fluenoriph@gmail.com, fluenoriph@yandex.ru
+"""
+
 import os.path
 import glob
 
@@ -11,14 +20,14 @@ if __name__ == '__main__':
     key = input("Enter your key:")
     result_format = input("Enter your format:")
 
-    source_log = os.path.abspath('.\logs')
-    out_path = os.path.abspath('.\output')
+    source_log = os.path.abspath(r'.\logs')
+    out_path = os.path.abspath(r'.\output')
 
     if os.path.isfile(source_log):
-        app_core = ProgramProcess(source_log, key, out_path, result_format)
+        app = ProgramProcess(source_log, key, out_path, result_format)
 
     elif os.path.isdir(source_log):
         files = glob.glob(f'{source_log}\*.log') + glob.glob(f'{source_log}\*.txt')
 
         for file in files:
-            app_core = ProgramProcess(file, key, out_path, result_format)
+            app = ProgramProcess(file, key, out_path, result_format)

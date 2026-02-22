@@ -1,5 +1,10 @@
+# Файл 'program_process.py': класс для основного хода программы.
+# 1. Парсинг лога сервера.
+# 2. Проверка на VirusTotal.
+# 3. Формирование и запись отчета.
+
 from app_code.modules.log_parser import LogParser
-from app_code.modules.virus_total import VirusTotalChecker
+from app_code.modules.virus_total_checker import VirusTotalChecker
 from app_code.modules.csv_report_generator import CsvReportGenerator
 from app_code.modules.json_report_generator import JsonReportGenerator
 from app_code.modules.program_logger import ProgramLogger
@@ -8,6 +13,7 @@ from app_code.modules.program_logger import ProgramLogger
 class ProgramProcess:
     def __init__(self, source_log_file, api_key, result_log_path, result_log_format):
         logger = ProgramLogger()
+
         logger.logger.info('Program started')
 
         source_log_parser = LogParser(source_log_file)
@@ -19,6 +25,7 @@ class ProgramProcess:
         if result_log_format == 'csv':
             csv_report = CsvReportGenerator(self.result, result_log_path)
             csv_report.generate()
+
             logger.logger.info('CSV report generated')
 
         elif result_log_format == 'json':
@@ -26,6 +33,8 @@ class ProgramProcess:
             json_report.generate()
 
             logger.logger.info('JSON report generated')
+
+    # Результат проверки в виде списка словарей. Используем для веб-интерфейса. Может нужен рефакторинг этого класса.
 
     @property
     def result(self):

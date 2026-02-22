@@ -1,3 +1,5 @@
+# Файл 'csv_report_generator.py': класс для формирования отчета в формате 'csv'.
+
 import csv
 from app_code.modules.base_report_generator import BaseReportGenerator
 
@@ -13,6 +15,8 @@ class CsvReportGenerator(BaseReportGenerator):
 
             writer = csv.DictWriter(file, fieldnames=columns)
             writer.writeheader()
+
+            # Так как исходные данные - это список словарей, то проверим их количество для корректной записи.
 
             if len(self.result_data) > 1:
                 writer.writerows(self.result_data)
