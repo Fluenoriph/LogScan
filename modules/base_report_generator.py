@@ -2,7 +2,7 @@
 
 import abc
 import os
-from app_code.modules.real_time import CurrentTime
+from modules.real_time import CurrentTime
 
 
 class BaseReportGenerator(abc.ABC):

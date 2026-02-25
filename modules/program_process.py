@@ -3,11 +3,11 @@
 # 2. Проверка на VirusTotal.
 # 3. Формирование и запись отчета.
 
-from app_code.modules.log_parser import LogParser
-from app_code.modules.virus_total_checker import VirusTotalChecker
-from app_code.modules.csv_report_generator import CsvReportGenerator
-from app_code.modules.json_report_generator import JsonReportGenerator
-from app_code.modules.program_logger import ProgramLogger
+from modules.log_parser import LogParser
+from modules.virus_total_checker import VirusTotalChecker
+from modules.csv_report_generator import CsvReportGenerator
+from modules.json_report_generator import JsonReportGenerator
+from modules.program_logger import ProgramLogger
 
 
 class ProgramProcess:

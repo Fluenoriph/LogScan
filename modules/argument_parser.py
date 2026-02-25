@@ -5,7 +5,7 @@ import argparse
 
 class ArgumentParser:
     def __init__(self):
-        self.parser = argparse.ArgumentParser(description="Log Scaner 1.0 Utility")
+        self.parser = argparse.ArgumentParser(description="Log Scaner 0.9 Utility")
         self.parser.add_argument('--logfile', type=str, required=True, help='Path to source log file or logs directory')
         self.parser.add_argument('--apikey', type=str, required=True, help='VirusTotal API key')
         self.parser.add_argument('--output', type=str, required=True, help='Path to result log directory')

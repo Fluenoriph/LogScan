@@ -17,3 +17,6 @@ class ProgramLogger:
     @property
     def logger(self):
         return self._logger
+
+
+# Вероятно счетчик каждых файлов логов.

@@ -2,7 +2,7 @@
 # * Возможно в дальнейшем можно разделить на два класса или более, по своим конкретным обязанностям. Может из абстрактного класса.
 
 import requests
-from app_code.modules.real_time import CurrentTime
+from modules.real_time import CurrentTime
 
 
 class VirusTotalChecker:
